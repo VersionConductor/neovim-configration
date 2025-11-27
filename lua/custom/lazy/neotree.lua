@@ -13,7 +13,7 @@ return {
                 popup_border_style = "rounded",
                 filesystem = {
                     filtered_items = {
-                        hide_dotfiles = false,
+                        hide_dotfiles = true,
                         hide_gitignored = true,
                     },
                     follow_current_file = {
@@ -22,7 +22,7 @@ return {
                     use_libuv_file_watcher = true
                 },
                 window = {
-                    position = "left",
+                    position = "right",
                     width = 30
                 },
             })
