@@ -2,6 +2,8 @@ require("custom.remap")
 require("custom.set")
 require("custom.lazy_init")
 
+-- vim.cmd([[colorscheme tokyonight]])
+
 local augroup = vim.api.nvim_create_augroup
 local TheCustomGroup = augroup('TheCustom', {})
 
