@@ -1,58 +1,81 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.opt.guicursor = ""
+-- vim.opt.guicursor = "i:ver25-blinkon0" -- Make insert mode a steady vertical bar (no blinking
+-- vim.opt.guicursor = "n:block-blinkwait700-blinkoff400-blinkon250" -- Make normal mode a block with custom blink speed
+-- Cursor
+-- vim.opt.guicursor = {
+--     "n-v-c:block",       -- Normal, Visual, Command: block
+--     "i-ci-ve:ver25",     -- Insert: vertical bar
+--     "r-cr:hor20",        -- Replace: horizontal bar
+--     "o:hor50",           -- Operator-pending: horizontal bar
+--     "a:blinkwait700-blinkoff400-blinkon250", -- Blinking
+-- }
+vim.g.maplocalleader = "\\"
 
--- folding keymaps
--- Toggle fold
--- Open fold
--- Close fold
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
-vim.api.nvim_set_keymap('n', '<leader>z', 'za', { noremap = true, silent = true })
-vim.api.nvim_set_keymap( 'n', '<leader>o', 'zo', { noremap = true, silent = true })
-vim.api.nvim_set_keymap( 'n', '<leader>c', 'zc', { noremap = true, silent = true })
+-- General
+map("n", "<leader>pv", "<cmd>Ex<CR>", { desc = "Open Explorer" })
+map("n", "<leader><leader>", "<cmd>source %<CR>", { desc = "Reload Current File" })
+map("n", "Q", "<nop>")
 
--- neotree keymaps
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>')
+-- Folding
+map("n", "<leader>z", "za", { desc = "Toggle Fold" })
+map("n", "<leader>o", "zo", { desc = "Open Fold" })
+map("n", "<leader>c", "zc", { desc = "Close Fold" })
 
--- Move current line up/down (with optional count)
-vim.keymap.set('n', '<leader>k', ':move-2<CR>==', {desc = 'Move line up'})
-vim.keymap.set('n', '<leader>j', ':move+<CR>==', {desc = 'Move line down'})
-vim.keymap.set('v', '<leader>k', ":move'<-2<CR>gv=gv", {desc = 'Move selection up'})
-vim.keymap.set('v', '<leader>j', ":move'>+<CR>gv=gv", {desc = 'Move selection down'})
+-- File Explorer
+map("n", "<leader>e", "<cmd>Neotree toggle<CR>", { desc = "Toggle File Explorer" })
 
--- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+-- Move lines
+map("n", "<leader>k", ":move-2<CR>==", { desc = "Move Line Up" })
+map("n", "<leader>j", ":move+<CR>==", { desc = "Move Line Down" })
+map("v", "<leader>k", ":move '<-2<CR>gv=gv", { desc = "Move Selection Up" })
+map("v", "<leader>j", ":move '>+<CR>gv=gv", { desc = "Move Selection Down" })
 
--- next greatest remap ever
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- Clipboard
+map("x", "<leader>p", [["_dP]], { desc = "Paste Without Overwriting Register" })
+map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to Clipboard" })
+map("n", "<leader>Y", [["+Y]], { desc = "Yank Line to Clipboard" })
+map({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete Without Yanking" })
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+-- Editing
+map("i", "<C-c>", "<Esc>", { desc = "Escape Insert Mode" })
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
+    desc = "Replace Word Under Cursor",
+})
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make File Executable" })
 
--- This is going to get me cancelled
-vim.keymap.set("i", "<C-c>", "<Esc>")
+-- LSP
+map("n", "<leader>f", function()
+    vim.lsp.buf.format()
+end, { desc = "Format Document" })
 
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+-- Quickfix List
+map("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "Next Quickfix Item" })
+map("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "Previous Quickfix Item" })
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+-- Location List
+map("n", "[l", "<cmd>lnext<CR>zz", { desc = "Next Location Item" })
+map("n", "]l", "<cmd>lprev<CR>zz", { desc = "Previous Location Item" })
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+-- Tmux
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", {
+    desc = "Open Tmux Sessionizer",
+})
 
-vim.keymap.set(
-    "n",
-    "<leader>ee",
-    "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
-)
+-- Go
+map("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", {
+    desc = "Insert Go Error Check",
+})
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+-- Theme
+map("n", "<leader>th", function()
+    ThemeSelector()
+end, { desc = "Select Colorscheme" })
 
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
-
+-- Cellular Automaton
+map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", {
+    desc = "Make It Rain",
+})
