@@ -1,20 +1,59 @@
+
 return {
-  'stevearc/conform.nvim',
+    {
+        "stevearc/conform.nvim",
 
-  config = function()
-    require("conform").setup({
-      formatters_by_ft = {
-        javascript = { "prettier", stop_after_first = true },
-        javascriptreact = { "prettier", stop_after_first = true },
-        typescriptreact = { "prettier", stop_after_first = true },
-      },
-    })
+        event = { "BufReadPre", "BufNewFile" },
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      callback = function(args)
-        require("conform").format({ bufnr = args.buf })
-      end,
-    })
-  end
+        config = function()
+            local conform = require("conform")
+
+            conform.setup({
+                formatters_by_ft = {
+                    -- JavaScript / TypeScript
+                    javascript = { "prettier" },
+                    javascriptreact = { "prettier" },
+                    typescript = { "prettier" },
+                    typescriptreact = { "prettier" },
+
+                    -- Web
+                    html = { "prettier" },
+                    css = { "prettier" },
+                    scss = { "prettier" },
+                    json = { "prettier" },
+                    jsonc = { "prettier" },
+                    yaml = { "prettier" },
+                    markdown = { "prettier" },
+
+                    -- PHP / Laravel
+                    php = { "pint" },
+
+                    -- Lua
+                    lua = { "stylua" },
+                },
+
+                format_on_save = {
+                    timeout_ms = 3000,
+                    lsp_format = "fallback",
+                },
+
+                formatters = {
+                    prettier = {
+                        prepend_args = { "--single-quote" },
+                    },
+                },
+            })
+
+            -- Manual formatting
+            vim.keymap.set({ "n", "v" }, "<leader>f", function()
+                conform.format({
+                    async = true,
+                    lsp_format = "fallback",
+                })
+            end, {
+                desc = "Format file",
+            })
+        end,
+    },
 }
+

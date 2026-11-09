@@ -1,25 +1,58 @@
+
 return {
-    "danymat/neogen",
-    dependencies = {
-        "nvim-treesitter/nvim-treesitter",
-        "L3MON4D3/LuaSnip",
+    {
+        "danymat/neogen",
+
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+
+        cmd = "Neogen",
+
+        keys = {
+            {
+                "<leader>nf",
+                function()
+                    require("neogen").generate({
+                        type = "func",
+                    })
+                end,
+                desc = "Neogen: Generate function documentation",
+            },
+
+            {
+                "<leader>nc",
+                function()
+                    require("neogen").generate({
+                        type = "class",
+                    })
+                end,
+                desc = "Neogen: Generate class documentation",
+            },
+
+            {
+                "<leader>nt",
+                function()
+                    require("neogen").generate({
+                        type = "type",
+                    })
+                end,
+                desc = "Neogen: Generate type documentation",
+            },
+
+            {
+                "<leader>na",
+                function()
+                    require("neogen").generate()
+                end,
+                desc = "Neogen: Generate annotations",
+            },
+        },
+
+        opts = {
+            enabled = true,
+            input_after_comment = true,
+            snippet_engine = "nvim",
+        },
     },
-    config = function()
-        local neogen = require("neogen")
-
-        neogen.setup({
-            snippet_engine = "luasnip"
-        })
-
-        vim.keymap.set("n", "<leader>nf", function()
-            neogen.generate({ type = "func" })
-        end)
-
-        vim.keymap.set("n", "<leader>nt", function()
-            neogen.generate({ type = "type" })
-        end)
-
-    end,
-    -- Uncomment next line if you want to follow only stable versions
-    -- version = "*"
 }

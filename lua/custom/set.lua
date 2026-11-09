@@ -1,35 +1,42 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
+local opt = vim.opt
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+-- Line numbers
+opt.number = true
+opt.relativenumber = true
 
-vim.opt.smartindent = true
+-- Indentation
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.expandtab = true
+opt.smartindent = true
 
-vim.opt.wrap = true
+-- Line wrapping
+opt.wrap = true
+opt.scrolloff = 8
+opt.colorcolumn = "80"
 
-vim.opt.swapfile = false
-vim.opt.backup = false
+-- Search
+opt.hlsearch = false
+opt.incsearch = true
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevelstart = 99 -- Open all folds by default
+-- Files
+opt.swapfile = false
+opt.backup = false
+opt.undofile = true
 
-vim.o.background = "dark"
+-- Folding
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldlevelstart = 99
 
-vim.opt.undofile = true
+-- UI
+opt.termguicolors = true
+opt.background = "dark"
+opt.signcolumn = "yes"
 
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
+-- Performance
+opt.updatetime = 50
 
-vim.opt.termguicolors = true
-
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
-
-vim.opt.updatetime = 50
-
-vim.opt.colorcolumn = "80"
+-- Other
+opt.isfname:append("@-@")
