@@ -56,11 +56,6 @@ map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", {
     desc = "Open Tmux Sessionizer",
 })
 
--- Go
-map("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", {
-    desc = "Insert Go Error Check",
-})
-
 -- Theme
 -- map("n", "<leader>th", function()
 --     ThemeSelector()
@@ -71,8 +66,3 @@ vim.keymap.set("n", "<leader>th", function()
         enable_preview = true,
     })
 end, { desc = "Select Colorscheme" })
-
--- Cellular Automaton
-map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", {
-    desc = "Make It Rain",
-})
