@@ -3,14 +3,6 @@ return {
     {
         "voldikss/vim-floaterm",
 
-        cmd = {
-            "FloatermNew",
-            "FloatermToggle",
-            "FloatermNext",
-            "FloatermPrev",
-            "FloatermKill",
-        },
-
         config = function()
             -- Floaterm appearance
             vim.g.floaterm_position = "center"
