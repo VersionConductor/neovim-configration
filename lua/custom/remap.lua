@@ -1,16 +1,7 @@
 vim.g.mapleader = " "
 vim.opt.guicursor = ""
--- vim.opt.guicursor = "i:ver25-blinkon0" -- Make insert mode a steady vertical bar (no blinking
--- vim.opt.guicursor = "n:block-blinkwait700-blinkoff400-blinkon250" -- Make normal mode a block with custom blink speed
--- Cursor
--- vim.opt.guicursor = {
---     "n-v-c:block",       -- Normal, Visual, Command: block
---     "i-ci-ve:ver25",     -- Insert: vertical bar
---     "r-cr:hor20",        -- Replace: horizontal bar
---     "o:hor50",           -- Operator-pending: horizontal bar
---     "a:blinkwait700-blinkoff400-blinkon250", -- Blinking
--- }
-vim.g.maplocalleader = "\\"
+
+-- vim.g.maplocalleader = "\\"
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -71,8 +62,14 @@ map("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", {
 })
 
 -- Theme
-map("n", "<leader>th", function()
-    ThemeSelector()
+-- map("n", "<leader>th", function()
+--     ThemeSelector()
+-- end, { desc = "Select Colorscheme" })
+
+vim.keymap.set("n", "<leader>th", function()
+    require("telescope.builtin").colorscheme({
+        enable_preview = true,
+    })
 end, { desc = "Select Colorscheme" })
 
 -- Cellular Automaton
