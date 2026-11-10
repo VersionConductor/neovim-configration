@@ -14,6 +14,8 @@ return {
                     "typescript",
                     "tsx",
                     "php",
+                    "bash",
+                    "json",
                 },
 
                 sync_install = false,

@@ -2,18 +2,16 @@ return {
     -- Mason: LSP installer
      {
         "williamboman/mason.nvim",
-        config = function()
-            reqiure("mason").setup({
-                ui = {
-                    border = "rounded",
-                    icons = {
-                        package_installed = "✓",
-                        package_pending = "➜",
-                        package_uninstalled = "✗",
-                    },
-                }
-            })
-        end
+        opts = {
+            ui = {
+                border = "rounded",
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗",
+                },
+            }
+        }
     },
 
     -- Mason LSP bridge
@@ -22,50 +20,28 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
         },
-        -- opts = {
-        --     ensure_installed = {
-        --         "lua_ls",
-        --         "ts_ls",
-        --         "html",
-        --         "cssls",
-        --         "intelephense",
-        --         "emmet_language_server",
-        --         "jsonls",
-        --         "eslint",
-        --         "tailwindcss",
-        --     },
+        opts = {
+            ensure_installed = {
+                "lua_ls",
+                "ts_ls"
+                "html",
+                "cssls",
+                "intelephense",
+                "emmet_language_server",
+                "jsonls",
+                "eslint",
+                "tailwindcss",
+                "vimls",
+            },
 
-        --     -- We will enable servers manually below.
-        --     automatic_enable = false,
-        -- },
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "lua_ls",
-                    "ts_ls",
-                    "html",
-                    "cssls",
-                    "intelephense",
-                    "emmet_language_server",
-                    "jsonls",
-                    "eslint",
-                    "tailwindcss",
-                },
-
-                -- We will enable servers manually below.
-                automatic_enable = {
-                    "lua_ls",
-                    "ts_ls",
-                    "html",
-                    "cssls",
-                    "intelephense",
-                    "emmet_language_server",
-                    "jsonls",
-                    "eslint",
-                    "tailwindcss",
-                },
-            })
-        end
+            -- We will enable servers manually below.
+            automatic_enable = {
+                "html",
+                "cssls",
+                "vimls"
+                "ts_ls"
+            },
+        },
     },
 
     -- LSP Configuration
@@ -98,11 +74,11 @@ return {
                     },
                 },
 
-                ts_ls = {},
-
                 html = {},
 
                 cssls = {},
+
+                ts_ls = {},
 
                 intelephense = {},
 
@@ -118,8 +94,10 @@ return {
                 jsonls = {},
 
                 eslint = {},
-
+                
                 tailwindcss = {},
+
+                vimls = {},
             }
 
             -- Configure and enable all servers
